@@ -2,13 +2,16 @@ package com.dailycodework.buynowdotcom.service.cart;
 
 import com.dailycodework.buynowdotcom.model.Cart;
 import com.dailycodework.buynowdotcom.model.User;
+import com.dailycodework.buynowdotcom.repository.CartRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 
 @Service
+@RequiredArgsConstructor
 public class CartService implements ICartService {
-    private final CartRepositoru cartRepository;
+    private final CartRepository cartRepository;
 
     @Override
     public Cart getCart(Long cartId) {
