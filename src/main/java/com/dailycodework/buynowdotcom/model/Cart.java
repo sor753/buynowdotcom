@@ -40,5 +40,8 @@ public class Cart {
     }
 
     public void addItem(CartItem cartItem) {
+        this.items.add(cartItem);
+        cartItem.setCart(this);
+        updateTotalAmount();
     }
 }

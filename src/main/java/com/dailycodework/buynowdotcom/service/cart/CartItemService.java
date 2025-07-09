@@ -6,6 +6,7 @@ import com.dailycodework.buynowdotcom.model.Product;
 import com.dailycodework.buynowdotcom.repository.CartItemRepository;
 import com.dailycodework.buynowdotcom.repository.CartRepository;
 import com.dailycodework.buynowdotcom.service.product.IProductService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -42,7 +43,10 @@ public class CartItemService implements ICartItemService {
 
     @Override
     public void removeItemFromCart(Long cartId, Long productId) {
-
+        Cart cart = cartService.getCart(cartId);
+        CartItem itemToRemove = getCartItem(cartId, productId);
+        cart.removeItem(itemToRemove);
+        cartRepository.save(cart);
     }
 
     @Override
@@ -52,6 +56,10 @@ public class CartItemService implements ICartItemService {
 
     @Override
     public CartItem getCartItem(Long cartId, Long productId) {
-        return null;
+        Cart cart = cartService.getCart(cartId);
+        return cart.getItems().stream()
+                .filter(item -> item.getProduct().getId().equals(productId))
+                .findFirst()
+                .orElseThrow(() -> new EntityNotFoundException("Cart not found!"));
     }
 }
