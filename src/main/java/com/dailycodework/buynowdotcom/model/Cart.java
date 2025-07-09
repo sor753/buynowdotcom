@@ -38,4 +38,7 @@ public class Cart {
     private void updateTotalAmount() {
 
     }
+
+    public void addItem(CartItem cartItem) {
+    }
 }
