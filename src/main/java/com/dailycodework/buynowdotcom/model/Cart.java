@@ -44,4 +44,9 @@ public class Cart {
         cartItem.setCart(this);
         updateTotalAmount();
     }
+
+    public void clearCart() {
+        this.items.clear();
+        updateTotalAmount();
+    }
 }
