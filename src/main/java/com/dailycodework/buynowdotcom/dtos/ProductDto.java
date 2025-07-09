@@ -1,7 +1,6 @@
 package com.dailycodework.buynowdotcom.dtos;
 
 import com.dailycodework.buynowdotcom.model.Category;
-import com.dailycodework.buynowdotcom.model.Image;
 import lombok.Data;
 
 import java.math.BigDecimal;
