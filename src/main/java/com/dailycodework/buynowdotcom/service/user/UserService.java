@@ -27,7 +27,7 @@ public class UserService implements IUserService {
                     user.setEmail(req.getEmail());
                     user.setPassword(req.getPassword());
                     return userRepository.save(user);
-                }).orElseThrow(() -> new EntityExistsException("Oops! "+request.getEmail()+" already exists!"));
+                }).orElseThrow(() -> new EntityExistsException("Oops! " + request.getEmail() + " already exists!"));
     }
 
     @Override
@@ -47,7 +47,9 @@ public class UserService implements IUserService {
 
     @Override
     public void deleteUser(Long userId) {
-        userRepository.findById(userId).ifPresentOrElse(userRepository :: delete,
-                () -> { throw new EntityNotFoundException("User not found!"); });
+        userRepository.findById(userId).ifPresentOrElse(userRepository::delete,
+                () -> {
+                    throw new EntityNotFoundException("User not found!");
+                });
     }
 }
