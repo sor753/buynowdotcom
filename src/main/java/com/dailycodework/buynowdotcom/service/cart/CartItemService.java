@@ -10,6 +10,8 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+
 @Service
 @RequiredArgsConstructor
 public class CartItemService implements ICartItemService {
@@ -51,7 +53,18 @@ public class CartItemService implements ICartItemService {
 
     @Override
     public void updateItemQuantity(Long cartId, Long productId, int quantity) {
-
+        Cart cart = cartService.getCart(cartId);
+        cart.getItems().stream()
+                .filter(item -> item.getProduct().getId().equals(productId))
+                .findFirst().ifPresent(item -> {
+                    item.setQuantity(quantity);
+                    item.setUnitPrice(item.getProduct().getPrice());
+                    item.setTotalPrice();
+                });
+        BigDecimal totalAmount = cart.getItems().stream().map(CartItem :: getTotalPrice)
+                .reduce(BigDecimal.ZERO, BigDecimal :: add);
+        cart.setTotalAmount(totalAmount);
+        cartRepository.save(cart);
     }
 
     @Override
