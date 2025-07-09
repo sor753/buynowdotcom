@@ -32,10 +32,10 @@ public class Cart {
     public void removeItem(CartItem cartItem) {
         this.items.remove(cartItem);
         cartItem.setCart(null);
-        updateTotaoAmount();
+        updateTotalAmount();
     }
 
-    private void updateTotaoAmount() {
+    private void updateTotalAmount() {
 
     }
 }
