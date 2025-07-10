@@ -1,9 +1,9 @@
 package com.dailycodework.buynowdotcom.controller;
 
+import com.dailycodework.buynowdotcom.dtos.OrderDto;
 import com.dailycodework.buynowdotcom.model.Order;
 import com.dailycodework.buynowdotcom.response.ApiResponse;
 import com.dailycodework.buynowdotcom.service.order.IOrderService;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,15 +18,16 @@ public class OrderController {
 
     @PostMapping("/user/order")
 //    トランザクションマネージャを使用する
-    @Transactional
+//    @Transactional
     public ResponseEntity<ApiResponse> placeOrder(@RequestParam Long userId) {
         Order order = orderService.placeOrder(userId);
-        return ResponseEntity.ok(new ApiResponse("Order placed successfully!", order));
+        OrderDto orderDto = orderService.convertToDto(order);
+        return ResponseEntity.ok(new ApiResponse("Order placed successfully!", orderDto));
     }
 
     @GetMapping("/user/{userId}/order")
     private ResponseEntity<ApiResponse> getUserOrders(@PathVariable Long userId) {
-        List<Order> orders = orderService.getUserOrders(userId);
+        List<OrderDto> orders = orderService.getUserOrders(userId);
         return ResponseEntity.ok(new ApiResponse("Success!", orders));
     }
 }

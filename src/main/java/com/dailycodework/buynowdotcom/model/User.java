@@ -1,5 +1,6 @@
 package com.dailycodework.buynowdotcom.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,7 +25,7 @@ public class User {
     private String firstName;
     private String lastName;
 
-//    NaturalId は、現実世界でも意味を持つドメインモデルの一意の識別子
+    //    NaturalId は、現実世界でも意味を持つドメインモデルの一意の識別子
 //    主キーとして適切でない場合でも（通常は代理キーが推奨されます）、Hibernate にその ID を伝えることは有用
     @NaturalId
     private String email;
@@ -33,10 +34,11 @@ public class User {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Cart cart;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Order> orders;
 
-//    fetch 戦略は EAGER 戦略が基本値
+    //    fetch 戦略は EAGER 戦略が基本値
 //    EAGER : 対象テーブル取得時に関連テーブルも取得するSQLも実行する
 //    LAZY : 関連テーブルのフィールドを参照した時に、関連テーブルを取得するSQLを実行する
 //    EAGERだと、関連テーブル不要のときも関連テーブル取得用SQLが実行されるため、EAGERは設定しないのがベスト
