@@ -7,9 +7,14 @@ import com.dailycodework.buynowdotcom.request.UserUpdateRequest;
 
 public interface IUserService {
     User createUser(CreateUserRequest request);
+
     User updateUser(UserUpdateRequest request, Long userId);
+
     User getUserById(Long userId);
+
     void deleteUser(Long userId);
 
     UserDto convertToDto(User user);
+
+    User getAuthenticatedUser();
 }
